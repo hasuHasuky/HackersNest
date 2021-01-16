@@ -174,8 +174,11 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.cpp" />
     <ClCompile Include="Source\GameEngine\Util\CollisionManager.cpp" />
     <ClCompile Include="Source\GameEngine\Util\SoundManager.cpp" />
+    <ClCompile Include="Source\Game\Util\DialogManager.cpp" />
     <ClCompile Include="Source\Game\Components\PlayerMovementComponent.cpp" />
     <ClCompile Include="Source\Game\Components\SpriteCameraComponent.cpp" />
+    <ClCompile Include="Source\Game\Entities\DialogTextEntity.cpp" />
+    <ClCompile Include="Source\Game\Entities\DialogBackgroundEntity.cpp" />
     <ClCompile Include="Source\Game\GameBoard.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Components\RenderComponent.cpp" />
     <ClCompile Include="Source\GameEngine\EntitySystem\Component.cpp" />
@@ -196,9 +199,12 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\CollidablePhysicsComponent.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\CollidableComponent.h" />
     <ClInclude Include="Source\GameEngine\Util\CollisionManager.h" />
+    <ClInclude Include="Source\Game\Util\DialogManager.h" />
     <ClInclude Include="Source\GameEngine\Util\SoundManager.h" />
     <ClInclude Include="Source\Game\Components\PlayerMovementComponent.h" />
     <ClInclude Include="Source\Game\Components\SpriteCameraComponent.h" />
+    <ClInclude Include="Source\Game\Entities\DialogTextEntity.h" />
+    <ClInclude Include="Source\Game\Entities\DialogBackgroundEntity.h" />
     <ClInclude Include="Source\Game\GameBoard.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Components\RenderComponent.h" />
     <ClInclude Include="Source\GameEngine\EntitySystem\Component.h" />
