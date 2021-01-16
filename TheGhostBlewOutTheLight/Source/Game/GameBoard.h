@@ -18,10 +18,35 @@ namespace Game
 		void Update();
 		bool IsGameOver() { return false; }
 
+		void CreatePlayer(sf::Vector2i coords);        
+		void CreateObstacle(sf::Vector2i coords);
+
 	private:
 		void CreatePlayer();          // <-- Added Function
 		void CreateObstacle();
 		GameEngine::Entity* m_player; // <-- Added Member
+		float m_gridSize;
+	};
+
+	class LevelLoader
+	{
+	public:
+		~LevelLoader();
+		//SINGLETON IMPLEMENTATION -> allows us to use LevelLoader::GetInstance without pointer to an object
+		//This is ia very standard pattern, when dealing with Managers and objects that should only exist ONCE
+		//in our grame, and not have multiple instances.
+		static LevelLoader* GetInstance() 
+		{
+			if (!sm_instance)
+				sm_instance = new LevelLoader();
+			return sm_instance;
+		}
+
+		void LoadLevel(GameBoard* board);
+
+	private:
+		LevelLoader();
+		static LevelLoader* sm_instance;
 	};
 }
 
