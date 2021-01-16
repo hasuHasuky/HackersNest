@@ -5,6 +5,7 @@
 #include "Components/SpriteCameraComponent.h"
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "GameEngine/EntitySystem/Components/CollidablePhysicsComponent.h"
+#include "GameEngine/EntitySystem/Entity.h"
 #include <SFML/System/Vector2.hpp>
 
 using namespace Game;
@@ -38,13 +39,13 @@ void LevelLoader::LoadLevel(GameBoard* board)
 
 GameBoard::GameBoard()
 	: m_player(nullptr)
-	, m_gridSize(50.f)
+	, m_gridSize(10.f)
 	
 {
 	LevelLoader::GetInstance()->LoadLevel(this);
 
     CreatePlayer();
-	CreateObstacle();
+	CreateObstacle(sf::Vector2i(0,0));
 }
 
 
@@ -54,8 +55,8 @@ void GameBoard::CreatePlayer()
 	m_player = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 
-	m_player->SetPos(sf::Vector2f(50.0f, 50.0f));
-	m_player->SetSize(sf::Vector2f(25.0f, 25.0f));
+	m_player->SetPos(sf::Vector2f(100.0f, 25.0f));
+	m_player->SetSize(sf::Vector2f(50.0f, 50.0f));
 
 	//Render
 	GameEngine::RenderComponent* render = m_player->AddComponent<GameEngine::RenderComponent>();
