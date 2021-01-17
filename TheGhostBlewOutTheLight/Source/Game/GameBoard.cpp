@@ -1,5 +1,4 @@
 #include "GameBoard.h"
-
 #include "GameEngine/GameEngineMain.h"
 #include "Components/PlayerMovementComponent.h"
 #include "Components/SpriteCameraComponent.h"
@@ -14,8 +13,12 @@
 #include <string>
 #include <SFML/System/Vector2.hpp>
 #include "GameEngine/EntitySystem/Components/AnimationComponent.h"
+#include "Game/Util/DialogManager.h"
+
 
 using namespace Game;
+
+const int MAX_FORTUNE = 2;
 
 LevelLoader* LevelLoader::sm_instance = nullptr;
 
@@ -55,10 +58,11 @@ GameBoard::GameBoard()
 	, m_gridSize(100.f)
 	, m_treaSize(50.f)
 	, time(0.f)
+	, gameStatus(GameState::Playing)
 	
 {
 	CreateBackground();
-	//CreateDarkScreen();
+	CreateDarkScreen();
 	LevelLoader::GetInstance()->LoadLevel(this);
 
 	CreateMusic();
@@ -139,23 +143,27 @@ void GameBoard::CreateObstacle(sf::Vector2i coords)
 
 void GameBoard::CreateDarkScreen()
 {
-	GameEngine::Entity* darkScreen = new GameEngine::Entity();
-	GameEngine::GameEngineMain::GetInstance()->AddEntity(darkScreen);
+	m_dark_screen = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_dark_screen);
 	
-	darkScreen->SetPos(sf::Vector2f(850.f, 1000.f));
-	darkScreen->SetSize(sf::Vector2f(1500.f, 1500.f));
-	darkScreen->AddComponent<Game::SpriteCameraComponent>();
-	darkScreen->AddComponent<Game::PlayerMovementComponent>();
+	m_dark_screen->SetSize(sf::Vector2f(1280.f, 900.f));
 
 	//Render
 	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>
-		(darkScreen->AddComponent<GameEngine::SpriteRenderComponent>());
-
+		(m_dark_screen->AddComponent<GameEngine::SpriteRenderComponent>());
 	render->SetFillColor(sf::Color::Transparent);
 	render->SetTexture(GameEngine::eTexture::type::DarkScreen);
 	render->SetZLevel(8);
-	
-	
+
+	m_dark_screen_red = new GameEngine::Entity();
+	m_dark_screen_red->SetSize(sf::Vector2f(1280.f, 900.f));
+
+	//Render
+	render = static_cast<GameEngine::SpriteRenderComponent*>
+		(m_dark_screen_red->AddComponent<GameEngine::SpriteRenderComponent>());
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetTexture(GameEngine::eTexture::type::DarkScreenRed);
+	render->SetZLevel(8);
 }
 void GameBoard::CreateMusic() {
 	m_sound = m_player->AddComponent<GameEngine::SoundComponent>();
@@ -240,22 +248,51 @@ void GameBoard::CreateInteractiveObject(sf::Vector2i coords)
 	
 }
 
-
 GameBoard::~GameBoard()
 {
 
 }
 
+static bool once = false;
 void GameBoard::Update()
 {
-	int fortune = GameEngine::CollidablePhysicsComponent::fortune;
-	sf::Vector2f pos = GameEngine::CameraManager::GetInstance()->GetCameraView().getCenter();
-	sf::Vector2u size = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow()->getSize();
-	int width = fortune * 10.f;
-	m_fortune_text->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30, pos.y - size.y / 2 + 25));
-	m_fortune_bar->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30 + width/2, pos.y - size.y / 2 + 75));
-	m_timer_text->SetPos(sf::Vector2f(pos.x + size.x / 2 - 150, pos.y - size.y / 2 + 25));
-	fortuneTextComponent->SetString("Fortune: " + std::to_string(fortune*100));
-	m_fortune_bar->SetSize(sf::Vector2f(width, 30.f));
-	timerTextComponent->SetString("Time: " + std::to_string((int) GameEngine::GameEngineMain::GetInstance()->GetGameTime()) + "s");
+	if (!IsGameOver()) {
+		int fortune = GameEngine::CollidablePhysicsComponent::fortune;
+		sf::Vector2f pos = GameEngine::CameraManager::GetInstance()->GetCameraView().getCenter();
+		sf::Vector2u size = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow()->getSize();
+		int width = fortune * 20.f;
+		m_fortune_text->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30, pos.y - size.y / 2 + 25));
+		m_fortune_bar->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30 + width/2, pos.y - size.y / 2 + 75));
+		m_timer_text->SetPos(sf::Vector2f(pos.x + size.x / 2 - 150, pos.y - size.y / 2 + 25));
+		fortuneTextComponent->SetString("Fortune: " + std::to_string(fortune*100));
+		m_fortune_bar->SetSize(sf::Vector2f(width, 30.f));
+		timerTextComponent->SetString("Time: " + std::to_string((int) GameEngine::GameEngineMain::GetInstance()->GetGameTime()) + "s");
+		m_dark_screen->SetPos(pos);
+		if (fortune > MAX_FORTUNE) {
+			GameOver(false);
+		}
+	}
+	else if (!once && IsGameOver()) {
+		std::string message = "...error.";
+		switch (gameStatus) {
+		case GameState::Lost:
+			GameEngine::GameEngineMain::GetInstance()->AddEntity(m_dark_screen_red);
+			m_dark_screen_red->SetPos(GameEngine::CameraManager::GetInstance()->GetCameraView().getCenter());
+			message = "You are haulted by the spirit and fainted. Someone found your body a hundred years later";
+			break;
+		case GameState::Win:
+			message = "You exited successfully!";
+			break;
+		default:
+			break;
+		}
+		once = true;
+		GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_dark_screen);
+		DialogManager::GetInstance()->closeDialog();
+		DialogManager::GetInstance()->openDialog(message);
+		Game::PlayerMovementComponent::game_paused = true;
+
+
+
+	}
 }

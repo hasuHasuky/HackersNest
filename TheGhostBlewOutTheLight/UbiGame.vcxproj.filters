@@ -178,5 +178,11 @@
     <Image Include="Resources\img\walk.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\img\darkScreen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\img\darkScreenTest.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

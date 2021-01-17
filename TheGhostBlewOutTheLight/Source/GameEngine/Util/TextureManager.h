@@ -17,8 +17,9 @@ namespace GameEngine
 			Treasure,
 			Level,
 			Player,
-			Count,
 			InteractiveObject,
+			DarkScreenRed,
+			Count //MUST BE THE LAST
 		};
 	}	
 
@@ -27,12 +28,14 @@ namespace GameEngine
 		switch (texture)
 		{
 		case eTexture::type::DarkScreen: return "darkScreenTest.png";
+		case eTexture::type::DarkScreenRed: return "darkScreen.png";
 		case eTexture::type::Background: return "background.png";
 		case eTexture::type::Obstacle: return "stone.jpg";
 		case eTexture::type::Level: return "wall.png";
 		case eTexture::type::Treasure: return "treasure.jpg";
 		case eTexture::type::Player: return "walk.png";
 		case eTexture::type::InteractiveObject: return "treasure.jpg"; //change
+		default: break;
 		}
 		return "UnknownTexType";
 	}
