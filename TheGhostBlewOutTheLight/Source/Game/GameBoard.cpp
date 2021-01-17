@@ -280,7 +280,7 @@ void GameBoard::Update()
 		case GameState::Lost:
 			GameEngine::GameEngineMain::GetInstance()->AddEntity(m_dark_screen_red);
 			m_dark_screen_red->SetPos(GameEngine::CameraManager::GetInstance()->GetCameraView().getCenter());
-			message = "You are haulted by the spirit and fainted. Someone found your body a hundred years later";
+			message = "You are haulted by the spirit and is too tired continue...\nSomeone found your body a hundred years later.";
 			break;
 		case GameState::Win:
 			message = "You exited successfully!";
