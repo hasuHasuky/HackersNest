@@ -274,6 +274,7 @@ void GameBoard::Update()
 		}
 	}
 	else if (!once && IsGameOver()) {
+		Game::PlayerMovementComponent::game_paused = true;
 		std::string message = "...error.";
 		switch (gameStatus) {
 		case GameState::Lost:
@@ -291,7 +292,6 @@ void GameBoard::Update()
 		GameEngine::GameEngineMain::GetInstance()->RemoveEntity(m_dark_screen);
 		DialogManager::GetInstance()->closeDialog();
 		DialogManager::GetInstance()->openDialog(message);
-		Game::PlayerMovementComponent::game_paused = true;
 		//m_back_ground->SetPos(pos);
 
 
