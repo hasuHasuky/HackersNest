@@ -6,6 +6,8 @@
 
 namespace GameEngine {
 	class SoundComponent;
+	class TextRenderComponent;
+	class RenderComponent;
 }
 
 namespace Game
@@ -31,7 +33,15 @@ namespace Game
 		float m_gridSize;
 		float m_treaSize;
 		void CreateMusic();
+		void CreateFortuneBar();
+		float time;
 		GameEngine::SoundComponent* m_sound;
+		GameEngine::Entity* m_fortune_bar;
+		GameEngine::Entity* m_fortune_text;
+		GameEngine::Entity* m_timer_text;
+		GameEngine::TextRenderComponent* fortuneTextComponent;
+		GameEngine::TextRenderComponent* timerTextComponent;
+		GameEngine::RenderComponent* fortuneBarComponent;
 		GameEngine::SoundManager::SoundId bgmID;
 	};
 

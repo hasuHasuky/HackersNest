@@ -8,6 +8,7 @@ namespace GameEngine
 	{
 	public:
 		static float speed_change;
+		static int fortune;
 		CollidablePhysicsComponent();
 		virtual ~CollidablePhysicsComponent();
 
