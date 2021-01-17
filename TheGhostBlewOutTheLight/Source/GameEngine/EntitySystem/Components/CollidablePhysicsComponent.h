@@ -7,6 +7,7 @@ namespace GameEngine
 	class CollidablePhysicsComponent : public CollidableComponent
 	{
 	public:
+		static float speed_change;
 		CollidablePhysicsComponent();
 		virtual ~CollidablePhysicsComponent();
 
