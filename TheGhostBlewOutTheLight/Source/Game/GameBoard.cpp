@@ -6,6 +6,7 @@
 #include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 #include "GameEngine/EntitySystem/Components/CollidablePhysicsComponent.h"
 #include "GameEngine/EntitySystem/Entity.h"
+#include "GameEngine/EntitySystem/Components/SoundComponent.h"
 #include <SFML/System/Vector2.hpp>
 
 using namespace Game;
@@ -49,9 +50,7 @@ GameBoard::GameBoard()
 {
 	LevelLoader::GetInstance()->LoadLevel(this);
 
-    //CreatePlayer();
-	//CreateObstacle(sf::Vector2i(0,0));
-	
+	CreateMusic();
 }
 
 
@@ -105,6 +104,12 @@ void GameBoard::CreateObstacle(sf::Vector2i coords)
 	obstacle->AddComponent<GameEngine::CollidableComponent>();
 }
 
+void GameBoard::CreateMusic() {
+	m_sound = m_player->AddComponent<GameEngine::SoundComponent>();
+	m_sound->SetNumSimultaneousSounds(2);
+	bgmID = m_sound->LoadSoundFromFile("Resources/sound/1.wav");
+	m_sound->PlaySound(bgmID,false,true,10.f);
+}
 
 void GameBoard::CreateTreasure(sf::Vector2i coords)
 {

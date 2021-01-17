@@ -43,12 +43,12 @@ SoundManager::SoundId SoundComponent::LoadSoundFromFile(std::string const& filen
 }
 
 
-void SoundComponent::PlaySound(SoundManager::SoundId const soundIdToPlay, bool useExistingSoundInstance /*= false*/)
+void SoundComponent::PlaySound(SoundManager::SoundId const soundIdToPlay, bool useExistingSoundInstance /*= false*/,bool loop,float volume)
 {
 	if (!m_soundManager)
 	{
 		return;
 	}
 
-	m_soundManager->PlaySound(soundIdToPlay, useExistingSoundInstance);
+	m_soundManager->PlaySound(soundIdToPlay, useExistingSoundInstance,loop,volume);
 }

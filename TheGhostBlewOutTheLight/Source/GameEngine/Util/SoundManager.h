@@ -37,7 +37,7 @@ namespace GameEngine
 		~SoundManager();
 
 		SoundId LoadSoundFromFile(std::string const& filename);
-		void PlaySound(SoundId const soundIdToPlay, bool useExistingSoundInstance = false);
+		void PlaySound(SoundId const soundIdToPlay, bool useExistingSoundInstance = false,bool loop = false,float volume = 100);
 		void PlayMusic(std::string const& filename);
 
 	private:
