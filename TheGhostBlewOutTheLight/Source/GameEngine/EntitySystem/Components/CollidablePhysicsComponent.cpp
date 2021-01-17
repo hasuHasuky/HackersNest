@@ -4,10 +4,12 @@
 #include "Game/Util/DialogManager.h"
 #include <SFML/Window/Keyboard.hpp> //<-- Add the keyboard include in order to get keyboard inputs
 #include <vector>
+#include "Game/Components/PlayerMovementComponent.h"
 
 using namespace GameEngine;
 using namespace Game;
 static bool touched_treasure = false;
+static bool answered_question = false;
 float CollidablePhysicsComponent::speed_change = 0.0f;
 
 CollidablePhysicsComponent::CollidablePhysicsComponent()
@@ -43,20 +45,37 @@ void CollidablePhysicsComponent::Update()
 		AABBRect myBox = GetWorldAABB();
 		AABBRect colideBox = colComponent->GetWorldAABB();
 
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && touched_treasure)
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && touched_treasure && answered_question)
 		{
-			speed_change += 0.5f;
 			DialogManager::GetInstance()->closeDialog();
 			touched_treasure = false;
+			answered_question = false;
 		}
+		if (!answered_question && touched_treasure) {
+			bool just_pressed = false;
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+				speed_change += 5.0f;
+				DialogManager::GetInstance()->closeDialog();
+				DialogManager::GetInstance()->openDialog("You have picked up the treasure! Press space to close this text");
+				PlayerMovementComponent::game_paused = false;
+				answered_question = true;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+				DialogManager::GetInstance()->closeDialog();
+				DialogManager::GetInstance()->openDialog("You have chosen not to pick up the treasure! Press space to close this text");
+				PlayerMovementComponent::game_paused = false;
+				answered_question = true;
+			}
+		}
 		if (myBox.intersects(colideBox, intersection))
 		{
 			GameEngine::Entity *collidedEntity = colComponent->GetEntity();
 
 			if (!touched_treasure && (collidedEntity->Entity::GetEntityType() == EEntityType::Treasure))
 			{
-				DialogManager::GetInstance()->openDialog("You have picked up a treasure! Press space to continue");
+				DialogManager::GetInstance()->openDialog("You have found treasure. Would you like to pick it up?\n y : yes \n n : no");
+				PlayerMovementComponent::game_paused = true;
 				touched_treasure = true;
 			}
 

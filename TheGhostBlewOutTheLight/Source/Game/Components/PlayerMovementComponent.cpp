@@ -6,7 +6,6 @@
 
 using namespace Game;
 bool PlayerMovementComponent::game_paused = false;
-
 void PlayerMovementComponent::Update()
 {  
     Component::Update();
