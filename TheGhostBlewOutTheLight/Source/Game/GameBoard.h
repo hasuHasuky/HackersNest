@@ -1,8 +1,12 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
-
+#include "GameEngine/Util/SoundManager.h"
 #include <SFML/System/Vector2.hpp>
 #include <vector>
+
+namespace GameEngine {
+	class SoundComponent;
+}
 
 namespace Game
 {
@@ -21,7 +25,11 @@ namespace Game
 	private:
 		void CreatePlayer();          // <-- Added Function
 		void CreateObstacle();
+		void CreateMusic();
 		GameEngine::Entity* m_player; // <-- Added Member
+		GameEngine::SoundComponent* m_sound;
+		GameEngine::SoundManager::SoundId bgmID;
+
 	};
 }
 
