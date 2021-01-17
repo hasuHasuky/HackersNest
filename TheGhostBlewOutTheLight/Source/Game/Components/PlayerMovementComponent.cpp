@@ -54,7 +54,7 @@ void PlayerMovementComponent::Update()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
         {
             displacement.y += (inputAmount - speed_difference) * dt;
-            animId = GameEngine::EAnimationId::type::PlayerWalkBack;
+            animId = GameEngine::EAnimationId::type::PlayerWalkFront;
         }
     }
     else {
@@ -63,7 +63,7 @@ void PlayerMovementComponent::Update()
     }
     GameEngine::AnimationComponent* animComp = GetEntity()->GetComponent<GameEngine::AnimationComponent>();
     if (animId) {
-        if (animComp && !animComp->IsAnimPlaying()) {
+        if (animComp && (!animComp->IsAnimPlaying()||animComp->GetCurrentAnimation() != animId)) {
             animComp->SetIsLooping(true);
             animComp->PlayAnim(animId);
         }

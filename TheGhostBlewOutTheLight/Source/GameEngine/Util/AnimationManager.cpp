@@ -41,6 +41,15 @@ void AnimationManager::InitStaticGameAnimations()
 			3,
 			4)
 	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::PlayerWalkFront,
+			eTexture::Player,
+			sf::Vector2i(3, 0),
+			3,
+			4)
+	);
 
 }
 

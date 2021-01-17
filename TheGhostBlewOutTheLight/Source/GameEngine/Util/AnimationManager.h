@@ -13,6 +13,7 @@ namespace GameEngine
 		{
 			None = 0,
 			PlayerWalkBack,
+			PlayerWalkFront,
 		};
 	}
 
