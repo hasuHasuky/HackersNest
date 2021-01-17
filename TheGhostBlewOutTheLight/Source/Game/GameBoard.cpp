@@ -129,6 +129,7 @@ void GameBoard::CreateTreasure(sf::Vector2i coords)
 	spriteRender->SetTexture(GameEngine::eTexture::Treasure);
 
 	treasure->AddComponent<GameEngine::CollidableComponent>();
+	//treasure->AddComponent<GameEngine::CollidablePhysicsComponent>();
 }
 
 
