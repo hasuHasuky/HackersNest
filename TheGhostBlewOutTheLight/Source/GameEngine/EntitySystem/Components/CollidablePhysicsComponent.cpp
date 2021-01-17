@@ -10,6 +10,7 @@
 using namespace GameEngine;
 using namespace Game;
 static bool touched_treasure = false;
+static bool touched_interactive_object = false;
 static bool answered_question = false;
 float CollidablePhysicsComponent::speed_change = 0.0f;
 
@@ -46,25 +47,50 @@ void CollidablePhysicsComponent::Update()
 		AABBRect myBox = GetWorldAABB();
 		AABBRect colideBox = colComponent->GetWorldAABB();
 
-		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && touched_treasure && answered_question)
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && answered_question)
 		{
 			DialogManager::GetInstance()->closeDialog();
 			touched_treasure = false;
+			touched_interactive_object = false;
 			answered_question = false;
 		}
-		if (!answered_question && touched_treasure) {
+
+		if (!answered_question && touched_treasure)
+		{
 			bool just_pressed = false;
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+			{
 				speed_change += 5.0f;
 				DialogManager::GetInstance()->closeDialog();
 				DialogManager::GetInstance()->openDialog("You have chosen to keep the treasure! Press space to close this text");
 				PlayerMovementComponent::game_paused = false;
 				answered_question = true;
 			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+			{
 				DialogManager::GetInstance()->closeDialog();
 				DialogManager::GetInstance()->openDialog("You have chosen not to pick up the treasure! Press space to close this text");
+				PlayerMovementComponent::game_paused = false;
+				answered_question = true;
+			}
+		}
+
+		if (!answered_question && touched_interactive_object)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y))
+			{
+				DialogManager::GetInstance()->closeDialog();
+				// Do something
+				DialogManager::GetInstance()->openDialog("You have examined it. Press space to close this text");
+				PlayerMovementComponent::game_paused = false;
+				answered_question = true;
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::N))
+			{
+				DialogManager::GetInstance()->closeDialog();
+				// Do something
+				DialogManager::GetInstance()->openDialog("You have chosen to leave it. Press space to close this text");
 				PlayerMovementComponent::game_paused = false;
 				answered_question = true;
 			}
@@ -79,6 +105,13 @@ void CollidablePhysicsComponent::Update()
 				PlayerMovementComponent::game_paused = true;
 				touched_treasure = true;
 				GameEngine::GameEngineMain::GetInstance()->RemoveEntity(collidedEntity);
+			}
+
+			if (collidedEntity->Entity::GetEntityType() == EEntityType::InteractiveObject)
+			{
+				DialogManager::GetInstance()->openDialog("Do you wish to examine this object?\n y : yes \n n : no");
+				PlayerMovementComponent::game_paused = true;
+				touched_interactive_object = true;
 			}
 
 			sf::Vector2f pos = GetEntity()->GetPos();
