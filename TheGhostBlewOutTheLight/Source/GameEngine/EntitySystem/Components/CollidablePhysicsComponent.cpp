@@ -7,7 +7,7 @@
 
 using namespace GameEngine;
 using namespace Game;
-
+static bool touched_treasure = false;
 float CollidablePhysicsComponent::speed_change = 0.0f;
 
 CollidablePhysicsComponent::CollidablePhysicsComponent()
@@ -42,18 +42,22 @@ void CollidablePhysicsComponent::Update()
 		AABBRect intersection;
 		AABBRect myBox = GetWorldAABB();
 		AABBRect colideBox = colComponent->GetWorldAABB();
+
+		if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) && touched_treasure)
+		{
+			speed_change += 0.5f;
+			DialogManager::GetInstance()->closeDialog();
+			touched_treasure = false;
+		}
+
 		if (myBox.intersects(colideBox, intersection))
 		{
 			GameEngine::Entity *collidedEntity = colComponent->GetEntity();
-			if (collidedEntity->Entity::GetEntityType() == EEntityType::Treasure)
+
+			if (!touched_treasure && (collidedEntity->Entity::GetEntityType() == EEntityType::Treasure))
 			{
 				DialogManager::GetInstance()->openDialog("You have picked up a treasure! Press space to continue");
-				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
-				{
-					speed_change += 0.5f;
-					DialogManager::GetInstance()->closeDialog();
-				}
-
+				touched_treasure = true;
 			}
 
 			sf::Vector2f pos = GetEntity()->GetPos();
