@@ -11,6 +11,7 @@ namespace GameEngine
 	class CollidableComponent : public Component
 	{
 	public:
+		static float speed_change;
 		CollidableComponent();
 		virtual ~CollidableComponent();
 

@@ -16,7 +16,7 @@ namespace GameEngine
 
 		void SetNumSimultaneousSounds(unsigned int const numSimultaneousSounds);
 		SoundManager::SoundId LoadSoundFromFile(std::string const& filename);
-		void PlaySound(SoundManager::SoundId const soundIdToPlay, bool useExistingSoundInstance = false);
+		void PlaySound(SoundManager::SoundId const soundIdToPlay, bool useExistingSoundInstance = false,bool loop = false,float volume=100);
 
 	private:
 		std::unique_ptr<SoundManager> m_soundManager;

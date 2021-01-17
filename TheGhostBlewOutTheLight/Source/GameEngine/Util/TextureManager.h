@@ -14,6 +14,8 @@ namespace GameEngine
 			Obstacle,
 			Background,
 			DarkScreen, //For the dark screen on top
+			Treasure,
+			Level,
 			Count,
 		};
 	}	
@@ -22,9 +24,11 @@ namespace GameEngine
 	{
 		switch (texture)
 		{
-		case eTexture::DarkScreen: return "darkScreenTest.png";
-		case eTexture::Background: return "background.png";
-		case eTexture::Obstacle: return "stone.jpg";
+		case eTexture::type::DarkScreen: return "darkScreenTest.png";
+		case eTexture::type::Background: return "background.png";
+		case eTexture::type::Obstacle: return "stone.jpg";
+		case eTexture::type::Level: return "wall.png";
+		case eTexture::type::Treasure: return "treasure.jpg";
 		}
 		return "UnknownTexType";
 	}

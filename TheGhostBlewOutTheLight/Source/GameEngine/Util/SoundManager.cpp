@@ -55,7 +55,7 @@ SoundManager::SoundId SoundManager::LoadSoundFromFile(std::string const& filenam
 }
 
 
-void SoundManager::PlaySound(SoundManager::SoundId const soundId, bool useExistingSoundInstance /*= false*/)
+void SoundManager::PlaySound(SoundManager::SoundId const soundId, bool useExistingSoundInstance /*= false*/,bool loop,float volume)
 {
 	if (!IsValidSoundId(soundId))
 	{
@@ -79,6 +79,8 @@ void SoundManager::PlaySound(SoundManager::SoundId const soundId, bool useExisti
 	}
 
 	assert(sound != m_soundInstances.end()); // We should have found a sound instance by now
+	sound->m_sound.setLoop(loop);
+	sound->m_sound.setVolume(volume);
 	PlaySoundWithSoundInstance(soundId, sound);
 }
 
