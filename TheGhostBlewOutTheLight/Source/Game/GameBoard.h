@@ -18,12 +18,14 @@ namespace Game
 		void Update();
 		bool IsGameOver() { return false; }
 
-		void CreatePlayer();        
+		void CreatePlayer(sf::Vector2i coords);
 		void CreateObstacle(sf::Vector2i coords);
+		void CreateTreasure(sf::Vector2i coords);
 
 	private:
 		GameEngine::Entity* m_player; // <-- Added Member
 		float m_gridSize;
+		float m_treaSize;
 	};
 
 	class LevelLoader

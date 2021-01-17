@@ -14,6 +14,7 @@ namespace GameEngine
 
 			AddYourTexturesEnumerationsHere, // Replace this for your own enumerations
 			Obstacle,
+			Treasure,
 			Level,
 			Count,
 		};
@@ -24,7 +25,8 @@ namespace GameEngine
 		switch (texture)
 		{
 		case eTexture::type::Obstacle: return "stone.jpg";
-		case eTexture::type::Level: return "testwall.png";
+		case eTexture::type::Level: return "wall.png";
+		case eTexture::type::Treasure: return "treasure.jpg";
 		}
 		
 		return "UnknownTexType";
