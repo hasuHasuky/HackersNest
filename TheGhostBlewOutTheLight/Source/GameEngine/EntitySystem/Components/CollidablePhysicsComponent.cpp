@@ -1,4 +1,5 @@
 #include "CollidablePhysicsComponent.h"
+#include "GameEngine/GameEngineMain.h"
 #include "GameEngine/Util/CollisionManager.h"
 #include "GameEngine/EntitySystem/Entity.h"
 #include "Game/Util/DialogManager.h"
@@ -57,7 +58,7 @@ void CollidablePhysicsComponent::Update()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
 				speed_change += 5.0f;
 				DialogManager::GetInstance()->closeDialog();
-				DialogManager::GetInstance()->openDialog("You have picked up the treasure! Press space to close this text");
+				DialogManager::GetInstance()->openDialog("You have chosen to keep the treasure! Press space to close this text");
 				PlayerMovementComponent::game_paused = false;
 				answered_question = true;
 			}
@@ -74,9 +75,10 @@ void CollidablePhysicsComponent::Update()
 
 			if (!touched_treasure && (collidedEntity->Entity::GetEntityType() == EEntityType::Treasure))
 			{
-				DialogManager::GetInstance()->openDialog("You have found treasure. Would you like to pick it up?\n y : yes \n n : no");
+				DialogManager::GetInstance()->openDialog("You have found treasure. Would you like to keep it?\n y : yes \n n : no");
 				PlayerMovementComponent::game_paused = true;
 				touched_treasure = true;
+				GameEngine::GameEngineMain::GetInstance()->RemoveEntity(collidedEntity);
 			}
 
 			sf::Vector2f pos = GetEntity()->GetPos();
