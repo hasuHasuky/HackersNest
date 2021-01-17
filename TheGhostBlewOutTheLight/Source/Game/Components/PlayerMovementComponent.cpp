@@ -29,27 +29,43 @@ void PlayerMovementComponent::Update()
 
     //The amount of speed that we will apply when input is received
     const float inputAmount = 100.0f;
-
+    GameEngine::EAnimationId::type animId = GameEngine::EAnimationId::type::None;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
     {
         displacement.x -= inputAmount * dt;
+        animId = GameEngine::EAnimationId::type::PlayerWalkBack;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
     {
         displacement.x += inputAmount * dt;
+        animId = GameEngine::EAnimationId::type::PlayerWalkBack;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         displacement.y -= inputAmount * dt;
+        animId = GameEngine::EAnimationId::type::PlayerWalkBack;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
         displacement.y += inputAmount * dt;
+        animId = GameEngine::EAnimationId::type::PlayerWalkBack;
     }
 
-    
     int maxIndex = 4;
+
+    GameEngine::AnimationComponent* animComp = GetEntity()->GetComponent<GameEngine::AnimationComponent>();
+    if (animId) {
+        if (animComp && !animComp->IsAnimPlaying()) {
+            animComp->SetIsLooping(true);
+            animComp->PlayAnim(animId);
+        }
+    }
+    else {
+        if (animComp && animComp->IsAnimPlaying()) {
+            animComp->StopAnim();
+        }
+    }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
@@ -58,7 +74,6 @@ void PlayerMovementComponent::Update()
         m_lastWalkIndex++;
         if (m_lastWalkIndex >= maxIndex)
             m_lastWalkIndex = 0;
-
         GameEngine::SpriteRenderComponent* spriteRender = GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>();
         if (spriteRender)
         {

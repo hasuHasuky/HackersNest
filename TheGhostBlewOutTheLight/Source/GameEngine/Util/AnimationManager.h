@@ -10,9 +10,9 @@ namespace GameEngine
 	namespace EAnimationId
 	{
 		enum type
-		{			
-			PlayerWalk,
-			None,
+		{
+			None = 0,
+			PlayerWalkBack,
 		};
 	}
 

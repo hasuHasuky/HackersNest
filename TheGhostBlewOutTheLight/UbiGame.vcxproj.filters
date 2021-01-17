@@ -144,4 +144,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\img\stone.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\img\treasure.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\img\wall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\img\walk.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
