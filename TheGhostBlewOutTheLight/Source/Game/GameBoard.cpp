@@ -87,11 +87,7 @@ void GameBoard::CreateDarkScreen()
 	render->SetTexture(GameEngine::eTexture::type::DarkScreen);
 	render->SetZLevel(8);
 
-	//LinkedEntityComponent* linkedCmp = static_cast<LinkedEntityComponent*>
-	//						(background->AddComponent<LinkedEntityComponent>());
-
-	//linkedCmp->SetFollowedEntity(m_player);
-	//inkedCmp->SetFollwedOffset(sf::Vector2f(0.f, -200.f));
+	
 }
 
 GameBoard::~GameBoard()
