@@ -1,5 +1,4 @@
 #include "CollidablePhysicsComponent.h"
-
 #include "GameEngine/Util/CollisionManager.h"
 #include "GameEngine/EntitySystem/Entity.h"
 #include "Game/Util/DialogManager.h"
@@ -8,6 +7,8 @@
 
 using namespace GameEngine;
 using namespace Game;
+
+float CollidablePhysicsComponent::speed_change = 0.0f;
 
 CollidablePhysicsComponent::CollidablePhysicsComponent()
 {
@@ -46,11 +47,13 @@ void CollidablePhysicsComponent::Update()
 			GameEngine::Entity *collidedEntity = colComponent->GetEntity();
 			if (collidedEntity->Entity::GetEntityType() != EEntityType::Treasure)
 			{
-				DialogManager::GetInstance()->openDialog("You have picked up a treasure!\n Press space to continue");
-				while (!(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
+				DialogManager::GetInstance()->openDialog("You have picked up a treasure! Press space to continue");
+				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 				{
+					speed_change += 0.1f;
+					DialogManager::GetInstance()->closeDialog();
 				}
-				DialogManager::GetInstance()->closeDialog();
+
 			}
 
 			sf::Vector2f pos = GetEntity()->GetPos();
