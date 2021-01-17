@@ -8,10 +8,20 @@ namespace GameEngine {
 	class SoundComponent;
 	class TextRenderComponent;
 	class RenderComponent;
+	class SpriteRenderComponent;
 }
 
 namespace Game
 {
+	namespace GameState
+	{
+		enum type
+		{
+			Lost = -1,
+			Playing,
+			Win
+		};
+	}
 	//Used for storing and controlling all game related entities, as well as providing an entry point for the "game" side of application	
 	class PlayerEntity;	
 
@@ -22,7 +32,9 @@ namespace Game
 		virtual ~GameBoard();
 
 		void Update();
-		bool IsGameOver() { return false; }
+		bool IsGameOver() { return gameStatus != GameState::Playing; }
+		void GameOver(bool win) { gameStatus = win ? GameState::type::Win : GameState::type::Lost; }
+		GameState::type getGameState() { return gameStatus; }
 
 		void CreatePlayer(sf::Vector2i coords);
 		void CreateObstacle(sf::Vector2i coords);
@@ -40,13 +52,17 @@ namespace Game
 		GameEngine::Entity* m_fortune_bar;
 		GameEngine::Entity* m_fortune_text;
 		GameEngine::Entity* m_timer_text;
+		GameEngine::Entity* m_dark_screen;
+		GameEngine::Entity* m_dark_screen_red;
 		GameEngine::TextRenderComponent* fortuneTextComponent;
 		GameEngine::TextRenderComponent* timerTextComponent;
+		GameEngine::SpriteRenderComponent* overlayComponent;
 		GameEngine::RenderComponent* fortuneBarComponent;
 		GameEngine::SoundManager::SoundId bgmID;
 		GameEngine::Entity* m_back_ground;
 		void CreateDarkScreen();
 		void CreateBackground();
+		GameState::type gameStatus;
 	};
 
 	class LevelLoader
