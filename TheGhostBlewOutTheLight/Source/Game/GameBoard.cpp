@@ -13,6 +13,7 @@
 #include "GameEngine/GameEngineMain.h"
 #include <string>
 #include <SFML/System/Vector2.hpp>
+#include "GameEngine/EntitySystem/Components/AnimationComponent.h"
 
 using namespace Game;
 
@@ -75,14 +76,19 @@ void GameBoard::CreatePlayer(sf::Vector2i coords)
 	m_player->SetSize(sf::Vector2f(100.0f, 100.0f));
 
 	//Render
-	GameEngine::RenderComponent* render = m_player->AddComponent<GameEngine::RenderComponent>();
+	//GameEngine::RenderComponent* render = m_player->AddComponent<GameEngine::RenderComponent>();
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(m_player->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	render->SetFillColor(sf::Color::Red);
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::Player);;
+
 
 	//Movement
 	m_player->AddComponent<Game::PlayerMovementComponent>();  // <-- Added the movement component to the player
 	m_player->AddComponent<Game::SpriteCameraComponent>();  // <-- Attach Camera to the player
 	m_player->AddComponent<GameEngine::CollidablePhysicsComponent>(); // <-- For colliding with obstacle
+	m_player->AddComponent<GameEngine::AnimationComponent>(); // <-- For animation
 }
 
 

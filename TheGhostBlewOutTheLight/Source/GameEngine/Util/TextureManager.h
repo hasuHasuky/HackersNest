@@ -16,6 +16,7 @@ namespace GameEngine
 			Obstacle,
 			Treasure,
 			Level,
+			Player,
 			Count,
 		};
 	}	
@@ -27,6 +28,7 @@ namespace GameEngine
 		case eTexture::type::Obstacle: return "stone.jpg";
 		case eTexture::type::Level: return "wall.png";
 		case eTexture::type::Treasure: return "treasure.jpg";
+		case eTexture::type::Player: return "walk.png";
 		}
 		
 		return "UnknownTexType";
@@ -53,6 +55,11 @@ namespace GameEngine
 
 namespace TextureHelper
 {
-	sf::Vector2f GetTextureTileSize(GameEngine::eTexture::type texture);
+	static sf::Vector2f GetTextureTileSize(GameEngine::eTexture::type texture) {
+		switch (texture) {
+		case GameEngine::eTexture::Player: return sf::Vector2f(200.f, 200.f);
+		}
+		return sf::Vector2f(-1.f, -1.f);
+	}
 }
 

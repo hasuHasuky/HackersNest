@@ -31,6 +31,17 @@ void AnimationManager::InitStaticGameAnimations()
 	3)
 	);
 	*/
+
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::PlayerWalkBack,
+			eTexture::Player,
+			sf::Vector2i(0, 0),
+			3,
+			4)
+	);
+
 }
 
 

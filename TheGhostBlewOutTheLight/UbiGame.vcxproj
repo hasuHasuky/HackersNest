@@ -215,6 +215,10 @@ XCOPY "$(SolutionDir)..\SFML-2.5.0\bin" "$(TargetDir)" /S /Y /I</Command>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resources\sound\1.mp3" />
+    <Image Include="Resources\img\stone.jpg" />
+    <Image Include="Resources\img\treasure.jpg" />
+    <Image Include="Resources\img\walk.png" />
+    <Image Include="Resources\img\wall.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

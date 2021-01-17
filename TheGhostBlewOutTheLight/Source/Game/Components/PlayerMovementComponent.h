@@ -9,6 +9,8 @@ namespace Game
     public:
         static bool game_paused;
         virtual void Update() override;
-        virtual void OnAddToWorld() override;
+        PlayerMovementComponent();
+        ~PlayerMovementComponent();
+        int m_lastWalkIndex;
     };
 }
