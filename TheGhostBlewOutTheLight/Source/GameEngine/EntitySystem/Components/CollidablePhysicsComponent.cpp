@@ -11,6 +11,7 @@ using namespace Game;
 static bool touched_treasure = false;
 static bool answered_question = false;
 float CollidablePhysicsComponent::speed_change = 0.0f;
+int CollidablePhysicsComponent::fortune = 0;
 
 CollidablePhysicsComponent::CollidablePhysicsComponent()
 {
@@ -55,6 +56,7 @@ void CollidablePhysicsComponent::Update()
 			bool just_pressed = false;
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Y)) {
+				fortune++;
 				speed_change += 5.0f;
 				DialogManager::GetInstance()->closeDialog();
 				DialogManager::GetInstance()->openDialog("You have picked up the treasure! Press space to close this text");

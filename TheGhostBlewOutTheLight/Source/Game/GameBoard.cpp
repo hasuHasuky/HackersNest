@@ -7,6 +7,11 @@
 #include "GameEngine/EntitySystem/Components/CollidablePhysicsComponent.h"
 #include "GameEngine/EntitySystem/Entity.h"
 #include "GameEngine/EntitySystem/Components/SoundComponent.h"
+#include "GameEngine/EntitySystem/Components/TextRenderComponent.h"
+#include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
+#include "GameEngine/Util/CameraManager.h"
+#include "GameEngine/GameEngineMain.h"
+#include <string>
 #include <SFML/System/Vector2.hpp>
 
 using namespace Game;
@@ -46,11 +51,13 @@ GameBoard::GameBoard()
 	: m_player(nullptr)
 	, m_gridSize(100.f)
 	, m_treaSize(50.f)
+	, time(0.f)
 	
 {
 	LevelLoader::GetInstance()->LoadLevel(this);
 
 	CreateMusic();
+	CreateFortuneBar();
 }
 
 
@@ -137,14 +144,45 @@ void GameBoard::CreateTreasure(sf::Vector2i coords)
 	//treasure->AddComponent<GameEngine::CollidablePhysicsComponent>();
 }
 
+void GameBoard::CreateFortuneBar() {
+	m_fortune_bar = new GameEngine::Entity();
+	m_fortune_text = new GameEngine::Entity();
+	m_timer_text = new GameEngine::Entity();
+	fortuneTextComponent = m_fortune_text->AddComponent<GameEngine::TextRenderComponent>();
+	fortuneBarComponent = m_fortune_bar->AddComponent<GameEngine::RenderComponent>();
+	timerTextComponent = m_timer_text->AddComponent<GameEngine::TextRenderComponent>();
+	//Fortune
+	fortuneTextComponent->SetColor(sf::Color::White);
+	fortuneTextComponent->SetFont("arial.ttf");
+	fortuneTextComponent->SetCharacterSizePixels(25);
+	fortuneTextComponent->SetZLevel(11);
+	fortuneBarComponent->SetFillColor(sf::Color::White);
+	fortuneBarComponent->SetZLevel(11);
+	//Timer
+	timerTextComponent->SetColor(sf::Color::White);
+	timerTextComponent->SetFont("arial.ttf");
+	timerTextComponent->SetCharacterSizePixels(25);
+	timerTextComponent->SetZLevel(11);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_fortune_text);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_fortune_bar);
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_timer_text);
+}
 
 GameBoard::~GameBoard()
 {
 
 }
 
-
 void GameBoard::Update()
-{	
-	
+{
+	int fortune = GameEngine::CollidablePhysicsComponent::fortune;
+	sf::Vector2f pos = GameEngine::CameraManager::GetInstance()->GetCameraView().getCenter();
+	sf::Vector2u size = GameEngine::GameEngineMain::GetInstance()->GetRenderWindow()->getSize();
+	int width = fortune * 10.f;
+	m_fortune_text->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30, pos.y - size.y / 2 + 25));
+	m_fortune_bar->SetPos(sf::Vector2f(pos.x - size.x / 2 + 30 + width/2, pos.y - size.y / 2 + 75));
+	m_timer_text->SetPos(sf::Vector2f(pos.x + size.x / 2 - 150, pos.y - size.y / 2 + 25));
+	fortuneTextComponent->SetString("Fortune: " + std::to_string(fortune*100));
+	m_fortune_bar->SetSize(sf::Vector2f(width, 30.f));
+	timerTextComponent->SetString("Time: " + std::to_string((int) GameEngine::GameEngineMain::GetInstance()->GetGameTime()) + "s");
 }

@@ -7,6 +7,7 @@ namespace GameEngine
 	class CollidablePhysicsComponent : public CollidableComponent
 	{
 	public:
+		static int fortune;
 		CollidablePhysicsComponent();
 		virtual ~CollidablePhysicsComponent();
 
