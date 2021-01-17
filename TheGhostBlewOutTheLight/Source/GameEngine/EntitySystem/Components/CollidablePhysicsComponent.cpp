@@ -45,12 +45,12 @@ void CollidablePhysicsComponent::Update()
 		if (myBox.intersects(colideBox, intersection))
 		{
 			GameEngine::Entity *collidedEntity = colComponent->GetEntity();
-			if (collidedEntity->Entity::GetEntityType() != EEntityType::Treasure)
+			if (collidedEntity->Entity::GetEntityType() == EEntityType::Treasure)
 			{
 				DialogManager::GetInstance()->openDialog("You have picked up a treasure! Press space to continue");
 				if ((sf::Keyboard::isKeyPressed(sf::Keyboard::Space)))
 				{
-					speed_change += 0.1f;
+					speed_change += 0.5f;
 					DialogManager::GetInstance()->closeDialog();
 				}
 

@@ -20,7 +20,7 @@ void PlayerMovementComponent::Update()
 
     //The amount of speed that we will apply when input is received
 
-    const float inputAmount = 100.0f;
+    const float inputAmount = 150.0f;
     if (!game_paused) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
         {
