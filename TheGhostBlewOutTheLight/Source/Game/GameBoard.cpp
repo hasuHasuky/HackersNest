@@ -38,6 +38,8 @@ void LevelLoader::LoadLevel(GameBoard* board)
 				board->CreateTreasure(sf::Vector2i(x, y));
 			if (pixelColor.r == 255 && pixelColor.g == 0 && pixelColor.b == 0)//red = player
 				board->CreatePlayer(sf::Vector2i(x, y));
+			if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
+				board->CreateInteractiveObject(sf::Vector2i(x, y));
 		}
 	}
 }
@@ -173,6 +175,33 @@ void GameBoard::CreateTreasure(sf::Vector2i coords)
 
 	treasure->AddComponent<GameEngine::CollidableComponent>();
 	//treasure->AddComponent<GameEngine::CollidablePhysicsComponent>();
+}
+
+
+void GameBoard::CreateInteractiveObject(sf::Vector2i coords)
+{
+	GameEngine::Entity* interactiveObject = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(interactiveObject);
+
+	interactiveObject->SetEntityType(GameEngine::EEntityType::InteractiveObject);
+	//Spawn position is calculated as coordinates on the grid, times grid size
+	//(so that 0,0 is in 0px -> 10, 5 is in 500px, 250px)
+	//+ half the grid size, since our objects are spawned in it's middle
+	float spawnPosX = coords.x * m_treaSize + (m_treaSize / 2.f);
+	float spawnPosY = coords.y * m_treaSize + (m_treaSize / 2.f);
+
+	interactiveObject->SetPos(sf::Vector2f(spawnPosX, spawnPosY));
+	interactiveObject->SetSize(sf::Vector2f(m_treaSize, m_treaSize));
+
+	//Render
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(interactiveObject->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::InteractiveObject);
+
+	interactiveObject->AddComponent<GameEngine::CollidableComponent>();
+	
 }
 
 

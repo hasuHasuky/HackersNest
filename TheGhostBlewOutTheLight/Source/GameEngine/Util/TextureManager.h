@@ -17,6 +17,7 @@ namespace GameEngine
 			Treasure,
 			Level,
 			Count,
+			InteractiveObject,
 		};
 	}	
 
@@ -29,6 +30,7 @@ namespace GameEngine
 		case eTexture::type::Obstacle: return "stone.jpg";
 		case eTexture::type::Level: return "wall.png";
 		case eTexture::type::Treasure: return "treasure.jpg";
+		case eTexture::type::InteractiveObject: return "treasure.jpg"; //change
 		}
 		return "UnknownTexType";
 	}

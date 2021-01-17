@@ -25,6 +25,7 @@ namespace Game
 		void CreatePlayer(sf::Vector2i coords);
 		void CreateObstacle(sf::Vector2i coords);
 		void CreateTreasure(sf::Vector2i coords);
+		void CreateInteractiveObject(sf::Vector2i coords);
 
 	private:
 		GameEngine::Entity* m_player; // <-- Added Member
