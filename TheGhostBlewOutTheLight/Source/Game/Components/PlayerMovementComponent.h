@@ -8,6 +8,8 @@ namespace Game
     {
     public:
         virtual void Update() override;
-        virtual void OnAddToWorld() override;
+        PlayerMovementComponent();
+        ~PlayerMovementComponent();
+        int m_lastWalkIndex;
     };
 }

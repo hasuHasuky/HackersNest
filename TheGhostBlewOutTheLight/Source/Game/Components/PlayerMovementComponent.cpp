@@ -2,8 +2,20 @@
 #include "PlayerMovementComponent.h"
 #include "GameEngine/GameEngineMain.h" //<-- Add this include to retrieve the delta time between frames
 #include "GameEngine/EntitySystem/Component.h"
+#include "GameEngine/EntitySystem/Components/AnimationComponent.h"
+#include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
 
 using namespace Game;
+
+PlayerMovementComponent::PlayerMovementComponent()
+    : m_lastWalkIndex(0)
+{
+
+}
+
+PlayerMovementComponent::~PlayerMovementComponent() {}
+
+//void PlayerMovementComponent::OnAddToWorld() {}
 
 void PlayerMovementComponent::Update()
 {
@@ -36,8 +48,27 @@ void PlayerMovementComponent::Update()
         displacement.y += inputAmount * dt;
     }
 
+    
+    int maxIndex = 4;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+    {
+        m_lastWalkIndex++;
+        if (m_lastWalkIndex >= maxIndex)
+            m_lastWalkIndex = 0;
+
+        GameEngine::SpriteRenderComponent* spriteRender = GetEntity()->GetComponent<GameEngine::SpriteRenderComponent>();
+        if (spriteRender)
+        {
+            spriteRender->SetTileIndex(sf::Vector2i(m_lastWalkIndex, 0));
+        }
+    }
+
     //Update the entity position
     GetEntity()->SetPos(GetEntity()->GetPos() + displacement);
+
 }
 
-void PlayerMovementComponent::OnAddToWorld() {}
+

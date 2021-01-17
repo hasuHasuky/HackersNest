@@ -16,6 +16,7 @@ namespace GameEngine
 			Obstacle,
 			Treasure,
 			Level,
+			Player,
 			Count,
 		};
 	}	
@@ -53,6 +54,11 @@ namespace GameEngine
 
 namespace TextureHelper
 {
-	sf::Vector2f GetTextureTileSize(GameEngine::eTexture::type texture);
+	static sf::Vector2f GetTextureTileSize(GameEngine::eTexture::type texture) {
+		switch (texture) {
+		case GameEngine::eTexture::Player: return sf::Vector2f(50.f, 50.f);
+		}
+		return sf::Vector2f(-1.f, -1.f);
+	}
 }
 
