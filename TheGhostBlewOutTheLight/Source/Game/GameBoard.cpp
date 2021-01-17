@@ -126,9 +126,11 @@ void GameBoard::CreateDarkScreen()
 {
 	GameEngine::Entity* darkScreen = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(darkScreen);
-
-	darkScreen->SetPos(sf::Vector2f(0.f, 0.f));
-	darkScreen->SetSize(sf::Vector2f(500.f, 500.f));
+	
+	darkScreen->SetPos(sf::Vector2f(850.f, 1000.f));
+	darkScreen->SetSize(sf::Vector2f(1500.f, 1500.f));
+	darkScreen->AddComponent<Game::SpriteCameraComponent>();
+	darkScreen->AddComponent<Game::PlayerMovementComponent>();
 
 	//Render
 	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>
@@ -137,7 +139,7 @@ void GameBoard::CreateDarkScreen()
 	render->SetFillColor(sf::Color::Transparent);
 	render->SetTexture(GameEngine::eTexture::type::DarkScreen);
 	render->SetZLevel(8);
-
+	
 	
 }
 void GameBoard::CreateMusic() {

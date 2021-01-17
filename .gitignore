@@ -5,6 +5,7 @@
 *.o
 */output
 .vs
+.vscode
 tmp
 UbiGame_Blank/bin
 UbiGame_Blank/tmp
