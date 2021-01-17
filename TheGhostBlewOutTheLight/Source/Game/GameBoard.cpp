@@ -58,7 +58,7 @@ GameBoard::GameBoard()
 	
 {
 	CreateBackground();
-	CreateDarkScreen();
+	//CreateDarkScreen();
 	LevelLoader::GetInstance()->LoadLevel(this);
 
 	CreateMusic();
