@@ -1,6 +1,5 @@
 #pragma once
 #include "GameEngine/EntitySystem/Entity.h"
-
 #include <SFML/System/Vector2.hpp>
 #include <vector>
 
@@ -21,6 +20,7 @@ namespace Game
 	private:
 		void CreatePlayer();          // <-- Added Function
 		void CreateObstacle();
+		void CreateDarkScreen();
 		GameEngine::Entity* m_player; // <-- Added Member
 	};
 }

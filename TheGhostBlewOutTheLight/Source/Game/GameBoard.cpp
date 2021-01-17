@@ -53,6 +53,28 @@ void GameBoard::CreateObstacle()
 	obstacle->AddComponent<GameEngine::CollidableComponent>();
 }
 
+void GameBoard::CreateDarkScreen()
+{
+	GameEngine::Entity* darkScreen = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(darkScreen);
+
+	darkScreen->SetPos(sf::Vector2f(50.f, 50.f));
+	darkScreen->SetSize(sf::Vector2f(200.f, 150.f));
+
+	//Render
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(darkScreen->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::DarkScreen);
+	spriteRender->SetZLevel(1);
+
+	//LinkedEntityComponent* linkedCmp = static_cast<LinkedEntityComponent*>
+	//						(background->AddComponent<LinkedEntityComponent>());
+
+	//linkedCmp->SetFollowedEntity(m_player);
+	//inkedCmp->SetFollwedOffset(sf::Vector2f(0.f, -200.f));
+}
 
 GameBoard::~GameBoard()
 {

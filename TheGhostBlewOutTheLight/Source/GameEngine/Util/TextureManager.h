@@ -14,6 +14,7 @@ namespace GameEngine
 
 			AddYourTexturesEnumerationsHere, // Replace this for your own enumerations
 			Obstacle,
+			DarkScreen, //For the dark screen on top
 			Count,
 		};
 	}	
@@ -23,8 +24,12 @@ namespace GameEngine
 		switch (texture)
 		{
 		case eTexture::Obstacle: return "stone.jpg";
+		case eTexture::DarkScreen: return "darkScreenTest.png";
+
 		}
 		
+
+
 		return "UnknownTexType";
 	}
 
