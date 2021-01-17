@@ -11,9 +11,8 @@ namespace GameEngine
 		enum type
 		{
 			None = -1,
-
-			AddYourTexturesEnumerationsHere, // Replace this for your own enumerations
 			Obstacle,
+			Background,
 			DarkScreen, //For the dark screen on top
 			Count,
 		};
@@ -23,13 +22,10 @@ namespace GameEngine
 	{
 		switch (texture)
 		{
-		case eTexture::Obstacle: return "stone.jpg";
 		case eTexture::DarkScreen: return "darkScreenTest.png";
-
+		case eTexture::Background: return "background.png";
+		case eTexture::Obstacle: return "stone.jpg";
 		}
-		
-
-
 		return "UnknownTexType";
 	}
 

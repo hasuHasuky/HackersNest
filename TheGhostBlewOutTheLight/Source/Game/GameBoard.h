@@ -21,6 +21,7 @@ namespace Game
 		void CreatePlayer();          // <-- Added Function
 		void CreateObstacle();
 		void CreateDarkScreen();
+		void CreateBackground();
 		GameEngine::Entity* m_player; // <-- Added Member
 	};
 }

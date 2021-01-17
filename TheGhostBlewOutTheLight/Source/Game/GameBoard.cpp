@@ -12,7 +12,9 @@ using namespace Game;
 GameBoard::GameBoard()
 {
     CreatePlayer();
+	CreateBackground();
 	CreateObstacle();
+	CreateDarkScreen();
 }
 
 void GameBoard::CreatePlayer()
@@ -34,6 +36,22 @@ void GameBoard::CreatePlayer()
 	m_player->AddComponent<GameEngine::CollidablePhysicsComponent>(); // <-- For colliding with obstacle
 }
 
+void GameBoard::CreateBackground()
+{
+	GameEngine::Entity* background = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(background);
+
+	background->SetPos(sf::Vector2f(200.f, 150.f));
+	background->SetSize(sf::Vector2f(2300.f, 1900.f));
+
+	//Render
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(background->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::Background);
+	spriteRender->SetZLevel(-1);
+}
 
 void GameBoard::CreateObstacle()
 {
@@ -41,7 +59,7 @@ void GameBoard::CreateObstacle()
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(obstacle);
 
 	obstacle->SetPos(sf::Vector2f(60.f, 60.f));
-	obstacle->SetSize(sf::Vector2f(100.f, 100.f));
+	obstacle->SetSize(sf::Vector2f(200.f, 200.f));
 
 	//Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
@@ -58,16 +76,16 @@ void GameBoard::CreateDarkScreen()
 	GameEngine::Entity* darkScreen = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(darkScreen);
 
-	darkScreen->SetPos(sf::Vector2f(50.f, 50.f));
-	darkScreen->SetSize(sf::Vector2f(200.f, 150.f));
+	darkScreen->SetPos(sf::Vector2f(0.f, 0.f));
+	darkScreen->SetSize(sf::Vector2f(500.f, 500.f));
 
 	//Render
-	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>
 		(darkScreen->AddComponent<GameEngine::SpriteRenderComponent>());
 
-	spriteRender->SetFillColor(sf::Color::Transparent);
-	spriteRender->SetTexture(GameEngine::eTexture::DarkScreen);
-	spriteRender->SetZLevel(1);
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetTexture(GameEngine::eTexture::type::DarkScreen);
+	render->SetZLevel(8);
 
 	//LinkedEntityComponent* linkedCmp = static_cast<LinkedEntityComponent*>
 	//						(background->AddComponent<LinkedEntityComponent>());
