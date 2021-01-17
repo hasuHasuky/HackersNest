@@ -1,14 +1,14 @@
 #include "DialogBackgroundEntity.h"
 #include "GameEngine/Util/CameraManager.h"
 #include "GameEngine/GameEngineMain.h"
-#include "GameEngine/EntitySystem/Components/SpriteRenderComponent.h"
+#include "GameEngine/EntitySystem/Components/RenderComponent.h"
 #include "GameEngine/EntitySystem/Entity.h"
 #include <iostream>
 
 using namespace Game;
 
 DialogBackgroundEntity::DialogBackgroundEntity() :visible{ false } {
-	spriteRenderer = AddComponent<GameEngine::SpriteRenderComponent>();
+	spriteRenderer = AddComponent<GameEngine::RenderComponent>();
 	spriteRenderer->SetFillColor(sf::Color(255, 255, 255,30));
 	spriteRenderer->SetZLevel(9);
 

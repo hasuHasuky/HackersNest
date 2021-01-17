@@ -32,7 +32,7 @@ namespace GameEngine
 		case eTexture::type::Level: return "wall.png";
 		case eTexture::type::Treasure: return "treasure.jpg";
 		case eTexture::type::Player: return "walk.png";
-		case eTexture::type::InteractiveObject: return "treasure.jpg"; //change
+		case eTexture::type::InteractiveObject: return "puppet.png"; //change
 		}
 		return "UnknownTexType";
 	}

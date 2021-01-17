@@ -44,6 +44,7 @@ namespace Game
 		GameEngine::TextRenderComponent* timerTextComponent;
 		GameEngine::RenderComponent* fortuneBarComponent;
 		GameEngine::SoundManager::SoundId bgmID;
+		GameEngine::Entity* m_back_ground;
 		void CreateDarkScreen();
 		void CreateBackground();
 	};

@@ -44,8 +44,8 @@ void LevelLoader::LoadLevel(GameBoard* board)
 				board->CreateTreasure(sf::Vector2i(x, y));
 			if (pixelColor.r == 255 && pixelColor.g == 0 && pixelColor.b == 0)//red = player
 				board->CreatePlayer(sf::Vector2i(x, y));
-			if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
-				board->CreateInteractiveObject(sf::Vector2i(x, y));
+			//if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
+				//board->CreateInteractiveObject(sf::Vector2i(x, y));
 		}
 	}
 }
@@ -97,11 +97,12 @@ void GameBoard::CreatePlayer(sf::Vector2i coords)
 
 void GameBoard::CreateBackground()
 {
+	// m_back_ground = new GameEngine::Entity();
 	GameEngine::Entity* background = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(background);
 
-	background->SetPos(sf::Vector2f(200.f, 150.f));
-	background->SetSize(sf::Vector2f(2300.f, 1900.f));
+	background->SetPos(sf::Vector2f(2300.f, 1500.f));
+	background->SetSize(sf::Vector2f(4500.f, 3000.f));
 
 	//Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
@@ -258,4 +259,6 @@ void GameBoard::Update()
 	fortuneTextComponent->SetString("Fortune: " + std::to_string(fortune*100));
 	m_fortune_bar->SetSize(sf::Vector2f(width, 30.f));
 	timerTextComponent->SetString("Time: " + std::to_string((int) GameEngine::GameEngineMain::GetInstance()->GetGameTime()) + "s");
+
+	//m_back_ground->SetPos(pos);
 }

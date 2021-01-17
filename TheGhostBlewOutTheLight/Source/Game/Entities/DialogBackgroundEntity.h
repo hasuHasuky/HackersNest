@@ -4,7 +4,7 @@
 
 namespace GameEngine
 {
-    class SpriteRenderComponent;
+    class RenderComponent;
 }
 
 namespace Game
@@ -18,7 +18,7 @@ namespace Game
         void show();
         void hide();
     private:
-        GameEngine::SpriteRenderComponent* spriteRenderer;
+        GameEngine::RenderComponent* spriteRenderer;
         bool visible;
     };
 }
