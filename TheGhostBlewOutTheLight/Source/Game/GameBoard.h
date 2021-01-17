@@ -27,6 +27,7 @@ namespace Game
 		void CreatePlayer(sf::Vector2i coords);
 		void CreateObstacle(sf::Vector2i coords);
 		void CreateTreasure(sf::Vector2i coords);
+		void CreateInteractiveObject(sf::Vector2i coords);
 
 	private:
 		GameEngine::Entity* m_player; // <-- Added Member
@@ -43,6 +44,8 @@ namespace Game
 		GameEngine::TextRenderComponent* timerTextComponent;
 		GameEngine::RenderComponent* fortuneBarComponent;
 		GameEngine::SoundManager::SoundId bgmID;
+		void CreateDarkScreen();
+		void CreateBackground();
 	};
 
 	class LevelLoader
@@ -66,6 +69,7 @@ namespace Game
 		static LevelLoader* sm_instance;
 		void CreatePlayer();          // <-- Added Function
 		void CreateObstacle();
+		GameEngine::Entity* m_player; // <-- Added Member
 
 	};
 }

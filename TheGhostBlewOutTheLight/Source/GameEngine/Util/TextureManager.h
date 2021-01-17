@@ -11,13 +11,14 @@ namespace GameEngine
 		enum type
 		{
 			None = -1,
-
-			AddYourTexturesEnumerationsHere, // Replace this for your own enumerations
 			Obstacle,
+			Background,
+			DarkScreen, //For the dark screen on top
 			Treasure,
 			Level,
 			Player,
 			Count,
+			InteractiveObject,
 		};
 	}	
 
@@ -25,12 +26,14 @@ namespace GameEngine
 	{
 		switch (texture)
 		{
+		case eTexture::type::DarkScreen: return "darkScreenTest.png";
+		case eTexture::type::Background: return "background.png";
 		case eTexture::type::Obstacle: return "stone.jpg";
 		case eTexture::type::Level: return "wall.png";
 		case eTexture::type::Treasure: return "treasure.jpg";
 		case eTexture::type::Player: return "walk.png";
+		case eTexture::type::InteractiveObject: return "treasure.jpg"; //change
 		}
-		
 		return "UnknownTexType";
 	}
 

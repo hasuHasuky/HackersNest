@@ -44,6 +44,8 @@ void LevelLoader::LoadLevel(GameBoard* board)
 				board->CreateTreasure(sf::Vector2i(x, y));
 			if (pixelColor.r == 255 && pixelColor.g == 0 && pixelColor.b == 0)//red = player
 				board->CreatePlayer(sf::Vector2i(x, y));
+			if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
+				board->CreateInteractiveObject(sf::Vector2i(x, y));
 		}
 	}
 }
@@ -55,6 +57,8 @@ GameBoard::GameBoard()
 	, time(0.f)
 	
 {
+	CreateBackground();
+	CreateDarkScreen();
 	LevelLoader::GetInstance()->LoadLevel(this);
 
 	CreateMusic();
@@ -91,6 +95,22 @@ void GameBoard::CreatePlayer(sf::Vector2i coords)
 	m_player->AddComponent<GameEngine::AnimationComponent>(); // <-- For animation
 }
 
+void GameBoard::CreateBackground()
+{
+	GameEngine::Entity* background = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(background);
+
+	background->SetPos(sf::Vector2f(200.f, 150.f));
+	background->SetSize(sf::Vector2f(2300.f, 1900.f));
+
+	//Render
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(background->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::Background);
+	spriteRender->SetZLevel(-1);
+}
 
 void GameBoard::CreateObstacle(sf::Vector2i coords)
 {
@@ -117,6 +137,26 @@ void GameBoard::CreateObstacle(sf::Vector2i coords)
 	obstacle->AddComponent<GameEngine::CollidableComponent>();
 }
 
+void GameBoard::CreateDarkScreen()
+{
+	GameEngine::Entity* darkScreen = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(darkScreen);
+	
+	darkScreen->SetPos(sf::Vector2f(850.f, 1000.f));
+	darkScreen->SetSize(sf::Vector2f(1500.f, 1500.f));
+	darkScreen->AddComponent<Game::SpriteCameraComponent>();
+	darkScreen->AddComponent<Game::PlayerMovementComponent>();
+
+	//Render
+	GameEngine::SpriteRenderComponent* render = static_cast<GameEngine::SpriteRenderComponent*>
+		(darkScreen->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	render->SetFillColor(sf::Color::Transparent);
+	render->SetTexture(GameEngine::eTexture::type::DarkScreen);
+	render->SetZLevel(8);
+	
+	
+}
 void GameBoard::CreateMusic() {
 	m_sound = m_player->AddComponent<GameEngine::SoundComponent>();
 	m_sound->SetNumSimultaneousSounds(2);
@@ -173,6 +213,33 @@ void GameBoard::CreateFortuneBar() {
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_fortune_bar);
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_timer_text);
 }
+
+void GameBoard::CreateInteractiveObject(sf::Vector2i coords)
+{
+	GameEngine::Entity* interactiveObject = new GameEngine::Entity();
+	GameEngine::GameEngineMain::GetInstance()->AddEntity(interactiveObject);
+
+	interactiveObject->SetEntityType(GameEngine::EEntityType::InteractiveObject);
+	//Spawn position is calculated as coordinates on the grid, times grid size
+	//(so that 0,0 is in 0px -> 10, 5 is in 500px, 250px)
+	//+ half the grid size, since our objects are spawned in it's middle
+	float spawnPosX = coords.x * m_treaSize + (m_treaSize / 2.f);
+	float spawnPosY = coords.y * m_treaSize + (m_treaSize / 2.f);
+
+	interactiveObject->SetPos(sf::Vector2f(spawnPosX, spawnPosY));
+	interactiveObject->SetSize(sf::Vector2f(m_treaSize, m_treaSize));
+
+	//Render
+	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>
+		(interactiveObject->AddComponent<GameEngine::SpriteRenderComponent>());
+
+	spriteRender->SetFillColor(sf::Color::Transparent);
+	spriteRender->SetTexture(GameEngine::eTexture::InteractiveObject);
+
+	interactiveObject->AddComponent<GameEngine::CollidableComponent>();
+	
+}
+
 
 GameBoard::~GameBoard()
 {

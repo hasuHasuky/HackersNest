@@ -11,6 +11,7 @@ namespace GameEngine
 		Obstacle,
 		Player,
 		Treasure,
+		InteractiveObject,
 	};
 	class Entity
 	{
