@@ -47,15 +47,15 @@ void LevelLoader::LoadLevel(GameBoard* board)
 				board->CreateTreasure(sf::Vector2i(x, y));
 			if (pixelColor.r == 255 && pixelColor.g == 0 && pixelColor.b == 0)//red = player
 				board->CreatePlayer(sf::Vector2i(x, y));
-			//if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
-				//board->CreateInteractiveObject(sf::Vector2i(x, y));
+			if (pixelColor.r == 0 && pixelColor.g == 0 && pixelColor.b == 255)//blue = interactive object
+				board->CreateInteractiveObject(sf::Vector2i(x, y));
 		}
 	}
 }
 
 GameBoard::GameBoard()
 	: m_player(nullptr)
-	, m_gridSize(100.f)
+	, m_gridSize(50.f)
 	, m_treaSize(50.f)
 	, time(0.f)
 	, gameStatus(GameState::Playing)
@@ -105,8 +105,8 @@ void GameBoard::CreateBackground()
 	GameEngine::Entity* background = new GameEngine::Entity();
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(background);
 
-	background->SetPos(sf::Vector2f(2300.f, 1500.f));
-	background->SetSize(sf::Vector2f(4500.f, 3000.f));
+	background->SetPos(sf::Vector2f(1750.f, 1225.f));
+	background->SetSize(sf::Vector2f(3000.f, 2500.f));
 
 	//Render
 	GameEngine::SpriteRenderComponent* spriteRender = static_cast<GameEngine::SpriteRenderComponent*>

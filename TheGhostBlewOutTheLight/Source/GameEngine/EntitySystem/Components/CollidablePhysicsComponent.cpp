@@ -14,6 +14,8 @@ static bool touched_interactive_object = false;
 static bool answered_question = false;
 float CollidablePhysicsComponent::speed_change = 0.0f;
 int CollidablePhysicsComponent::fortune = 0;
+static bool started = false;
+static bool called = false;
 
 CollidablePhysicsComponent::CollidablePhysicsComponent()
 {
@@ -37,6 +39,16 @@ void CollidablePhysicsComponent::Update()
 {
 	//For the time being just a simple intersection check that moves the entity out of all potential intersect boxes
 	std::vector<CollidableComponent *> &collidables = CollisionManager::GetInstance()->GetCollidables();
+	if (!started && !called) {
+		DialogManager::GetInstance()->openDialog("You have chose to enter an ancient emperor's tomb for its treasure.\nWalk around to observe.\nPress space to continue.");
+		PlayerMovementComponent::game_paused = true;
+		started = true;
+	}
+	if (started && !called && sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+		called = true;
+		DialogManager::GetInstance()->closeDialog();
+		PlayerMovementComponent::game_paused = false;
+	}
 
 	for (int a = 0; a < collidables.size(); ++a)
 	{
