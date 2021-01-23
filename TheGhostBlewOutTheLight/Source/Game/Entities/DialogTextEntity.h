@@ -16,6 +16,7 @@ namespace Game {
 			virtual void OnRemoveFromWorld() override;
 			virtual void Update() override;
 			void setTargetString(std::string target) { currentString = ""; targetString = target; timer = 0; }
+			void finishString();
 			void show();
 			void hide();
 			bool isCompleted();

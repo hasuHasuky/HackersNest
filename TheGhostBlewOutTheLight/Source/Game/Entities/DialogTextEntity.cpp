@@ -36,6 +36,11 @@ void DialogTextEntity::Update() {
 	}
 }
 
+void DialogTextEntity::finishString() {
+	currentString = targetString;
+	textRenderer->SetString(currentString);
+}
+
 void DialogTextEntity::show() {
 	textRenderer->SetCharacterSizePixels(20);
 	visible = true;
@@ -43,6 +48,7 @@ void DialogTextEntity::show() {
 
 void DialogTextEntity::hide() {
 	textRenderer->SetCharacterSizePixels(0);
+	textRenderer->SetString("");
 	visible = false;
 }
 

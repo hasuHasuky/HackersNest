@@ -18,6 +18,10 @@ bool DialogManager::isDialogCompleted() {
 	return dialog_text->isCompleted();
 }
 
+void DialogManager::finishDialog() {
+	dialog_text->finishString();
+}
+
 void DialogManager::closeDialog() {
 	if (opened) {
 		dialog_text->setTargetString("");

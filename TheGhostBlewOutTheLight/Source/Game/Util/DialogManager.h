@@ -9,6 +9,7 @@ namespace Game {
 	public:
 		static DialogManager* GetInstance() { if (!sm_instance) sm_instance = new DialogManager(); return sm_instance; }
 		void openDialog(std::string);
+		void finishDialog();
 		void closeDialog();
 		bool isDialogCompleted();
 	private:
